@@ -1,0 +1,304 @@
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600&display=swap');
+
+:root {
+  /* ===== Variables =====  252631*/
+  --main-color : #304767;
+  --secondary-color: #23468c;
+  --light-color: #ff5f2f;
+  --fade-color: #4f6581;
+  --smoke: whitesmoke;
+  --gold-color : #fbb900;
+  --success: #198754;
+  --danger: #dc3545;
+  --color-dark: #212529;
+  --color-white: #fff;
+  --text-gray: #8390a2;
+
+  --cursive-font: "Playball" , cursive;
+
+  --sidebar-color: #212529;
+  --sidebar-active: #23468c;
+  --sidebar-active-hover: #50505a;
+
+  --border-color: #ccc;
+  --main-background: #f1f5f9;
+
+  --sidebar-width: 14rem;
+  --sidebar-width-check: 5rem;
+
+  --box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.2);
+}
+
+* {
+    padding: 0;
+    margin: 0;
+    box-sizing: border-box;
+    list-style: none;
+    text-decoration: none;
+}
+
+html{
+    scroll-behavior: smooth;
+}
+
+body {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    font-family: 'Poppins', sans-serif;
+    background-color: silver;
+    box-sizing: border-box;
+}
+.container{
+    position: relative;
+    width: 70vw;
+    height: 25rem;
+    display: inline-flex;
+}
+.back-box{  
+    display: inline-flex;
+    position: absolute;
+    width: 100%;
+    height: 80%;
+    transform: translate(0,-50%);
+    top:50%;
+    border-radius: .2rem;
+    background-color: var(--color-dark);
+}
+
+.front-box{
+    height: 100%;
+    width: 50%;
+    position: absolute;
+    right:0;
+    margin-left: 3rem;
+    margin-right: 1.9rem;
+    border-radius: .5rem;
+    z-index: 10;
+    background-color: var(--color-white);
+    transition: right .8s ease-in-out;
+}
+
+.login-msg, .signup-msg{
+    width: 50%;
+    height: 100%;
+    font-size: 15px;
+}
+
+.login-msg, .signup-msg{
+    transition: opacity .8s ease-in-out;
+}
+
+.login-msg .title,
+.signup-msg .title{
+    font-weight: 600;
+    font-size: 1rem;
+    margin-bottom: 1rem;
+}
+
+.login-msg button,
+.signup-msg button {
+    font-size: 14px;
+    color:var(--color-white);
+    margin-top: 1.5rem;
+    padding:.5rem 1rem;
+    border-radius: .2rem;
+    border: none;
+    background-color: cornflowerblue;
+    cursor: pointer;
+}
+
+.text-content{
+    color:white;
+    margin-top:2rem;
+    margin-left: 3rem;
+    word-wrap: break-word;
+}
+.text-content h1{
+    margin-bottom:2rem;
+    display: inline-flex;
+    align-items: center;
+    font-size: 2rem;
+}
+.text-content h1 span{
+    font-size: 3rem;
+    color: cornflowerblue;
+}
+.text-content p{
+    font-size: 14px;
+}
+
+/*=====  front box content =====*/
+.login, .signup{
+    padding: 1rem;
+    text-align: center;
+}
+
+.login h2,
+.signup h2 {
+    color: var(--color-dark);
+    font-size:22px;
+}
+
+.input-box{
+    margin-top:2rem; 
+}
+
+.login input, 
+.signup input {
+    display: block;
+    width: 100%;
+    height: 2rem;
+    padding: .5rem 1rem;
+    background-color: transparent;
+    border-radius: .2rem;
+    border: 1px solid var(--text-gray);
+    margin-bottom:1.2rem;
+    font-size: 14px;
+}
+
+.login input:focus, 
+.signup input:focus {
+    border: 2px solid var(--text-gray) !important;
+}
+
+.login button,
+.signup button{
+    color:white;
+    font-size: 14px;
+    padding:.5rem 1rem;
+    border-radius: .2rem;
+    position: absolute;
+    right:2rem;
+    bottom: 2rem;
+    border: none;
+    background-color: var(--color-dark);
+    cursor: pointer;
+}
+.visibility{
+    opacity: 0;
+}
+.moving{
+    right:45%;
+}
+.hide{
+    display: none;
+}
+
+/* ===== Pop up styles ===== */
+.banners-container {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+  }
+.banner {
+    color: white;
+    font-weight: 500;
+    padding: 1rem;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+}
+.banner .banner-message {
+    flex: 1;
+    padding: 0 2rem;
+}
+.banner .banner-close {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 0.5rem;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: background 0.3s;
+}
+.banner .banner-close:hover {
+    background: rgba(0, 0, 0, 0.12);
+}
+
+.banner.success {
+    background: var(--success);
+}
+.banner.success::after {
+    /* background: #10c15c; */
+    background: var(--success);
+}
+.banner.error {
+    background: var(--danger);
+}
+.banner.error::after {
+    /* background: #ed1c24; */
+    background: var(--danger);
+}
+.banner::after {
+    content: "";
+    position: absolute;
+    height: 10rem;
+    width: 100%;
+    bottom: 100%;
+    left: 0;
+}
+.banner:not(.visible) {
+    display: none;
+    transform: translateY(-100%);
+}
+.banner.visible {
+    box-shadow: 0 2px 2px 2px rgba(0, 0, 0, 0.12);
+    animation-name: banner-in;
+    animation-direction: forwards;
+    animation-duration: 0.6s;
+    animation-timing-function: ease-in-out;
+    animation-fill-mode: forwards;
+    animation-iteration-count: 1;
+}
+
+@keyframes banner-in {
+    0% {
+        transform: translateY(-100%);
+    }
+    50% {
+        transform: translateY(10%);
+    }
+    100% {
+        transform: translateY(0);
+    }
+}
+.show-banner {
+    appearance: none;
+    background: #ededed;
+    border: 0;
+    padding: 1rem 2rem;
+    border-radius: 4px;
+    cursor: pointer;
+    text-transform: uppercase;
+}
+
+.circle-loader {
+    display: none;
+    border: 3px solid rgba(0, 0, 0, 0.2);
+    border-left-color: var(--color-dark);
+    animation: loader-spin 1.4s infinite linear;
+    position: relative;
+    vertical-align: top;
+    border-radius: 50%;
+    width: 2.5em;
+    height: 2.5em;
+}
+  
+@keyframes loader-spin {
+    0% {
+      transform: rotate(0deg);
+    }
+    100% {
+      transform: rotate(360deg);
+    }
+}
+  
+
+@media (max-width:770px) {
+    .container{
+        width: 85vw;
+    }
+}

@@ -1,0 +1,190 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="../vendor/fontawesome-6.1.2/css/all.min.css" crossorigin="anonymous" />
+    <link rel="stylesheet" href="../css/dashboard.css">
+    <link rel="stylesheet" href="../css/dashboard-content.css">
+    <link rel="stylesheet" href="../css/utils.css">
+    <link rel="shortcut icon" href="../img/favicon.ico" type="image/x-icon">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js"></script>
+    <title>Dashboard | CElect</title>
+</head>
+    <body>
+        <div class="modal-container">
+            <div class="modal" id="pop-up">
+                <div class="content-wrapper">
+                  <button class="modal-close close">X</button>
+                  <div class="modal-header">
+                    <p>Do you really want to perform this operation?</p>
+                  </div>
+                  <div class="modal-content">
+                    <input type="password" name="admin_pwd" id="admin_pwd" placeholder="Enter your password to confirm">
+                  </div>
+                  <div class="modal-footer">
+                      <button class="action-cancel">Cancel</button>
+                    <button class="action-confirm">Confirm</button>
+                  </div>
+                </div>
+            </div>
+        </div>
+        <div class="banners-container">
+            <div class="banner error">
+              <div class="banner-icon"><i class="fa fa-circle-exclamation" aria-hidden=True></i></div>
+              <div class="bad banner-message"></div>
+              <div class="banner-close"><i class="fa fa-xmark" aria-hidden="true"></i></div>
+            </div>
+            <div class="banner success">
+              <div class="banner-icon"><i class="fa-regular fa-thumbs-up" aria-hidden=True></i></div>
+              <div class="good banner-message"></div>
+              <div class="banner-close"><i class="fa fa-xmark" aria-hidden="true"></i></div>
+            </div>
+        </div>
+        <input type="checkbox" id="nav-toggle">
+        <!-- Sidebar -->
+        <section class="sidebar">
+            <div class="sidebar-brand">
+                <h3>
+                    <span><i class="fa fa-hand-pointer" aria-hidden="true"></i></span>
+                    <span>C-Elect</span>
+                </h3>
+            </div>
+
+            <div class="sidebar-menu">
+                <ul>
+                    <li>
+                        <a href="#" class="active-link" data-content = 'home.html' data-js="" data-id="home"> 
+                            <span><i class="fas fa-house-user" aria-hidden="true"></i> </span>
+                            <span>Dashboard</span> 
+                        </a>
+                    </li>
+                    <li>
+                        <a href="#"  data-content = 'profile.html' data-js="profile.js" data-id="profile">
+                            <span><i class="fa fa-address-card" aria-hidden="true"></i> </span>
+                            <span>My Profile</span>
+                        </a>
+                    </li>
+                    <li id="admin_action">
+                        <a href="#"  data-content = 'manage_users.html' data-js="manage_users.js" data-id="users">
+                            <span><i class="fa fa-users" aria-hidden="true"></i> </span>
+                            <span>Users Management</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="#" data-content = 'user_files.html' data-js="" data-id="files">
+                            <span><i class="fa fa-folder-tree" aria-hidden="true"></i> </span>
+                            <span>My Files</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="#" data-content = 'make_selection.html' data-js="make_selection.js" data-id="selection">
+                            <span><i class="fa fa-check-double" aria-hidden="true"></i> </span>
+                            <span>Make a Selection</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="#" data-content="" data-js="" data-id="logout">
+                            <span><i class="fa-solid fa-arrow-right-from-bracket" aria-hidden="true"></i> </span>
+                            <span>Logout</span>
+                        </a>
+                    </li>
+                </ul>
+            </div>
+        </section>
+
+        <!-- Main Content -->
+        <div class="main-content">
+            <header>
+                <div class="header-title">
+                    <h2>  
+                        <label for="nav-toggle">
+                            <i id="reduce-sidebar" class="fa fa-angles-left" aria-hidden="true"></i>
+                        </label>
+                        Dashboard 
+                    </h2>
+                </div>
+                <div class="user-wrapper">
+                    <img src="../img/no-user.png" alt="User photo">
+                    <div>
+                        <h4 id="user-name">-</h4>
+                        <small id="user-role">-</small>
+                    </div>
+                </div>
+            </header>
+            <main id="main-section">
+                <div class="cards">
+                    <div class="card-single">
+                        <div>
+                            <h1 id="stat_n_users">-</h1>
+                            <span> Number of users</span>
+                        </div>
+                        <div>
+                            <i class="fas fa-users" aria-hidden="true"></i>
+                        </div>
+                    </div>
+                
+                    <div class="card-single">
+                        <div>
+                            <h1 id="stat_n_files">-</h1>
+                            <span>Number of files</span>
+                        </div>
+                        <div>
+                            <i class="fa fa-file-arrow-down" aria-hidden="true"></i>
+                        </div>
+                    </div>
+                
+                    <div class="card-single">
+                        <div>
+                            <h1 id="stat_n_sol">-</h1>
+                            <span>Number of operations</span>
+                        </div>
+                        <div>
+                            <i class="fa fa-lightbulb" aria-hidden="true"></i>
+                        </div>
+                    </div>
+                
+                    <div class="card-single">
+                        <div>
+                            <h1 id="stat_percent">-%</h1>
+                            <span>Satisfaction</span>
+                        </div>
+                        <div>
+                            <i class="fa fa-face-smile" aria-hidden="true"></i>
+                        </div>
+                    </div>
+                </div>
+            </main>
+        </div> 
+        <script>
+            function show_option_for_enum(id){
+                let value = id.substr(11);
+                let selectMetric = document.getElementById(id);
+                let moreForm = document.getElementById('more-than-option'+value);
+                let lessForm = document.getElementById('less-than-option'+value);
+
+                let option = selectMetric.options[selectMetric.selectedIndex].value
+                
+                if(option == "lessThan"){
+                    moreForm.classList.remove('hide')
+                    moreForm.classList.add('show')
+                    lessForm.classList.remove('show')
+                    lessForm.classList.add('hide')
+                }
+                else if(option == "moreThan"){
+                    lessForm.classList.remove('hide')
+                    lessForm.classList.add('show')
+                    moreForm.classList.remove('show')
+                    moreForm.classList.add('hide')
+                }
+                else{
+                    moreForm.classList.remove('show')
+                    lessForm.classList.remove('show')
+                    moreForm.classList.add('hide')
+                    lessForm.classList.add('hide')
+                }
+            }
+        </script>
+        <script type="module" src="../js/dashboard.js"></script>   
+    </body>
+</html>

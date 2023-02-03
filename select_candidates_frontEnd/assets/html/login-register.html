@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="../vendor/fontawesome-6.1.2/css/all.min.css" crossorigin="anonymous" />
+    <link rel="stylesheet" href="../css/login.css">
+    <link rel="shortcut icon" href="../img/favicon.ico" type="image/x-icon">
+    <title>Login | C-Elect</title>
+</head>
+<body>
+  <div class="banners-container">
+    <div class="banner error">
+      <div class="banner-icon"><i class="fa fa-circle-exclamation" aria-hidden=True></i></div>
+      <div class="bad banner-message"></div>
+      <div class="banner-close"><i class="fa fa-xmark" aria-hidden="true"></i></div>
+    </div>
+    <div class="banner success">
+      <div class="banner-icon"><i class="fa-regular fa-thumbs-up" aria-hidden=True></i></div>
+      <div class="good banner-message"></div>
+      <div class="banner-close"><i class="fa fa-xmark" aria-hidden="true"></i></div>
+    </div>
+  </div>
+    <div class="container">
+        <div class="back-box">
+          <div class="login-msg">
+            <div class="text-content">
+                <h1><span>C</span> - Elect</h1>
+              <p class="title">You do not have an account ?</p>
+              <p>Create one to have access to this platform.</p>
+              <button id="switch-1">Register</button>
+            </div>
+          </div>
+          <div class="signup-msg visibility">
+            <div class="text-content">
+                <h1><span>C</span> - Elect</h1>
+              <p class="title">Do you already have an account ?</p>
+              <p>Log in to have access to this platform.</p>
+              <button id="switch-2">Login</button>
+            </div>
+          </div>
+        </div>
+        <!-- backbox -->
+    
+        <div class="front-box">
+          <div class="login">
+            <h2>Login</h2>
+            <div class="input-box">
+              <form id="login">
+                <input type="email" name="log_email" placeholder="Your email address" required>
+                <input type="password" name="log_password" placeholder="Your password" required>
+                <button type="submit">Login</button>
+              </form>
+            </div>
+            <div id="login_loader" class="circle-loader"></div>
+          </div>
+    
+          <div class="signup hide">
+            <h2>Account creation</h2>
+            <div class="input-box">
+              <form id="sign_up">
+                <input type="text" name="fullname" placeholder="Your surname and first name(s)" required>
+                <input type="email" name="email" placeholder="Your email address" required>
+                <input type="password" name="password" placeholder="Your password" minlength="8" required>
+                <input type="password" name="pwd_confirmed" placeholder="Confirm your password" minlength="8" required>
+                <button type="submit">Register</button>
+              </form>
+            </div>
+            <div id="register_loader" class="circle-loader"></div>
+          </div>
+          
+        </div>
+        
+        <!-- frontbox -->
+      </div>
+      <script type="module" src="../js/auth.js"></script>
+</body>
+</html>

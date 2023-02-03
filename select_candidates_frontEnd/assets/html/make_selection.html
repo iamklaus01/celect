@@ -1,0 +1,195 @@
+<div class="underline-title">
+    <p class="headline">Perform a select operation</p>
+    <hr>
+</div>
+<div class="container">
+    <div class="card">
+        <div class="card-content">
+            <div class="left-side">
+                <div class="steps-content">
+                    <h3>Etape <span class="step-number">1</span></h3>
+                    <p class="step-number-content active">Upload candidate data file.</p>
+                    <p class="step-number-content d-none">Select compellable features.</p>
+                    <p class="step-number-content d-none">Define your criteria on each feature.</p>
+                    <p class="step-number-content d-none">Validate and start processing.</p>
+                </div>
+                <ul class="progress-bar">
+                    <li class="active">Upload</li>
+                    <li>Choice of features</li>
+                    <li>Definition of criteria</li>
+                    <li>Validation</li>
+                </ul>
+            </div>
+            <div class="right-side">
+                <div class="main active">
+                    <div class="text">
+                        <h2>Upload</h2>
+                        <p>Upload a <code>.csv</code> or <code>xlsx</code> file that informs candidate information. (Maximum size : 20Mb)</p>
+                    </div>
+                    <div class="section-content  step-1">
+                        <form id="upload_form" class="upload_file" enctype="multipart/form-data">
+                            <div class="upload-input-container">
+                                <input id="c_file" type="file" name="c_file" required>
+                                <div class="input-help">
+                                    <div class="upload-icone">
+                                        <img src="../img/upload.svg" alt="Upload Icone" >
+                                    </div>
+                                    <p id="input_file_placeholder">Drag and drop your files here or click on the framed area</p> <br>
+                                    <progress id="progressBar" value="0" max="100" style="width:300px;"></progress>
+                                </div>
+                            </div>
+                            <button id="file_upload_btn" class="submit-button-dark" type="submit">Validate</button>
+                        </form>
+                    </div>
+                    <div class="buttons">
+                        <button id="file_upload_next" class="next_button">Next</button>
+                    </div>
+                </div>
+                <div class="main">
+                    <div class="text">
+                        <h2>Choice of features</h2>
+                        <p>Select the features on which you want to define criteria.</p>
+                    </div>
+                    <div class="section-content  step-2">
+                        <div class="checkbox-list">
+                            <form id="select-feature">
+                                <div id="list_features">
+                                    
+                                </div>
+                                <button id="validate-f-select" class="submit-button-dark" type="submit">Validate</button>
+                            </form>
+                        </div>
+                    </div>
+                    <div class="buttons button_space">
+                        <button class="back_button">Back</button>
+                        <button class="next_button">Next</button>
+                    </div>
+                </div>
+                <div class="main">
+                    <div class="text">
+                        <h2>Definition of selection criteria</h2>
+                        <p>Define candidates selection criteria.</p>
+                    </div>
+                    <div class="section-content  step-3">
+                        <div class="single-form">
+                            <div class="form-container">
+                                <form id="int-constraint-define">
+                                    <div id="constraints-forms">
+                                        
+                                    </div>
+                                    <button class="submit-button" type="submit">Validate</button>
+                                </form>
+                                <form id="enum-constraint-define">
+                                    <div id="constraints-forms">
+                                        <div class="enum-input-container">
+                                            <div id="enum-feature-input" class="feature-input" data-feature_id="">
+                                                <div class="feature-name">
+                                                    <p id="enum-feature-name"></p>
+                                                </div>
+                                                <div id="single-enum-container">
+                                                
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <button id="econstraint-btn" class="submit-button" type="submit">Validate</button>
+                                </form>
+                                <form id="limit-constraint-define">
+                                    <div id="constraints-forms">
+                                        <div class="feature-input" data-feature_id="`+detail.feature_id+`">
+                                            <div class="feature-name">
+                                                <p>Limit of selections to be made</p>
+                                            </div>
+                                            <br>
+                                            <small style="color: white;">Enter -1 or 0 if you want to get all the proposals</small>
+                                            <br><br>
+                                            <div class="int-input-container">
+                                                <div class="int-input" title="Set a limit of proposals to make to you">
+                                                    <label for="feature_min">Limit of selections : &nbsp;</label>
+                                                    <input type="number" id="limit-number" value="-1" min="-1" name="limit-number-constraint" required>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <button id="limit_button" class="submit-button" type="submit">Validate</button>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="buttons">
+                        <button id="end-constraints" class="next_button">Next</button>
+                    </div>
+                </div>                      
+                <div class="main">
+                    <div class="text">
+                        <h2>Validation</h2>
+                        <p>Please validate the defined criteria then launch the processing.</p>
+                    </div>
+                    <div class="section-content  step-4">
+                        <div class="validate-tables">
+                            <div id="validate-int" class="table-container">
+                                
+                            </div>
+                            <div id="validate-enum" class="table-container">
+                                
+                            </div>
+                        </div>
+                    </div>
+                    <div class="buttons button_space">
+                        <button id="validation_button">OK</button>
+                        <button id="final_button" class="next_button">Validate</button>
+                    </div>
+                </div>
+                <div class="main">
+                    <div class="text actions-btn-container">
+                        <h2 class="final-step">Selection of candidates</h2>
+                        <div class="actions-btn">
+                            <button title="Download all the solutions in a pdf file" class="download-file-btn" type="button" id="btn-pdf-download"><img src="../img/file-pdf.png" alt="Download Pdf" ></button>
+                            <button title="Download all the solutions in a excel file" class="download-file-btn" type="button" id="btn-excel-download"><img src="../img/excel.png" alt="Download Excel" ></button>
+                        </div>
+                    </div>
+                    <div id="last-section" class="section-content step-5">
+                        <div class="loader">
+                            <span>{</span>&ensp;<code>Processing ...</code>&ensp;<span class="odd-span">}</span>
+                        </div>
+                    </div>
+                    <div class="sub_steps-name">
+                        <p>Determination of variables</p>
+                    </div>
+                    
+                    <div id="main-result" class="main-result">
+                        <div class="stats-grid">
+                            <div class="stat-card">
+                                <div class="top-row">
+                                    <div class="title">
+                                        <div class="icon"></div>
+                                        <div class="name">Resolution status</div>
+                                    </div>
+                                </div>
+                                <div id="resolution-status" class="middle-row">-</div>
+                                <div class="bottom-row">C-Elect</div>
+                            </div>
+                            <div class="stat-card">
+                                <div class="top-row">
+                                    <div class="title">
+                                        <div class="icon"></div>
+                                        <div class="name">Number of solutions</div>
+                                    </div>
+                                </div>
+                                <div id="resolution-n-sol" class="middle-row">-</div>
+                                <div class="bottom-row">C-Elect</div>
+                            </div>
+                        </div>
+                        <div class="underline-title">
+                            <p>Preview of selection lists</p>
+                            <hr>
+                        </div>
+                        <div id="sample-results" class="sample-results">
+                            
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
