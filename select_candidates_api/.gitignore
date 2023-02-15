@@ -7,4 +7,4 @@ routers/__pycache
 utils/__pycache
 models/__pycache
 solver/__pycache
-blacklist_db.txt
+db/blacklist_db.txt
