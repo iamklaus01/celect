@@ -1,21 +1,52 @@
 import enum
-from numpy import dtype
 import pandas as pd
+import zipfile
+import PyPDF2
+import io
+import re
 
+from numpy import dtype
 from datetime import datetime
 from math import trunc
+from pathlib import Path  
+
 from models.featureSchema import Feature
-
-from tables import Metric, users, candidates_files
-from database import database
-
+from db.tables import Metric, users, candidates_files
+from db.database import database
+from nlp import get_dataframe_from_resumes
 
 class FileType(enum.Enum):
     cFile = "CANDIDATE_FILE"
+    zFile = "COMPRESSED_RESUMES"
     sFile = "SOLUTION_FILE"
 
+def read_resume_from_zip_file(zip_path: str):
+    resumes_data = []
+    with zipfile.ZipFile(zip_path, 'r') as zip_file:
+        files_name = zip_file.namelist()
+        for file_name in files_name:
+            file_content = io.BytesIO(zip_file.read(file_name))
+            pdf_reader = PyPDF2.PdfReader(file_content)
 
-def read_file(path:str):
+            content = ""
+            for page_num in range(len(pdf_reader.pages)):
+                page = pdf_reader.pages[page_num]
+                data = page.extract_text()
+                content += data
+            resumes_data.append(content)
+
+    resumes_dataframe = get_dataframe_from_resumes(resumes_data)
+
+    zip_file_name = re.split('/ |\\', zip_path)[-1]
+    csv_file_name = zip_file_name.split(".")[0]
+    csv_path = Path('files/candidates/'+csv_file_name)
+
+    resumes_dataframe.to_csv(csv_path)
+
+    return resumes_dataframe, csv_path
+    
+
+def read_file(path: str):
     if path.split('.')[1] == 'csv':
         return pd.read_csv(path)
     else:
@@ -30,9 +61,14 @@ def rename_file(filename:str):
 def get_file_path(type:FileType, name:str):
     if type == FileType.cFile:
         return "files/candidates/"+name
+    elif type == FileType.zFile:
+        return "files/compressed/"+name
     else:
         return "files/selected/"+name
 
+def get_file_name_from_path(path: str):
+    file_name = re.split('/ |\\', path)[-1]
+    return file_name
 
 def extract_features(path:str):
     data = read_file(path)
