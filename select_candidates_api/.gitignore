@@ -2,6 +2,7 @@
 env/
 files/candidates
 files/selected
+files/compressed
 __pycache
 routers/__pycache
 utils/__pycache
