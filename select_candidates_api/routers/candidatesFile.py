@@ -4,22 +4,23 @@ from os import getcwd, remove
 from typing import List
 from sqlalchemy import select
 
-from database import database
+from db.database import database
 import shutil
 from passlib.hash import pbkdf2_sha256
 
 
-from tables import Role, ValueType, candidates_files, features, users, integer_constraints, enum_constraints
-from token_dependencie import JWTBearer
+from db.tables import Role, ValueType, candidates_files, features, users, integer_constraints, enum_constraints
+from auth.token_dependencie import JWTBearer
 from solver.solver import solve
 from models.candidatesFileSchema import CandidateFile, CandidateFileToDelete
 from models.featureSchema import AllFeatureIn
-from utils.util import check_user, rename_file, get_file_path, extract_features, FileType, format_int_constraints, format_enum_constraints, format_feature_label_id
+from utils.util import check_user, rename_file, read_file, get_file_path, get_file_name_from_path, extract_features, FileType, format_int_constraints, format_enum_constraints, format_feature_label_id, read_resume_from_zip_file
 
 FILE_NOT_FOUND_MESSAGE = "File not found! Make sure you have the correct ID"
 USER_NOT_FOUND_MESSAGE = "User not found! The email address or username is incorrect"
 
 router = APIRouter()
+
 
 @router.get("/", response_model=List[CandidateFile], dependencies=[Depends(JWTBearer())])
 async def get_candidates_files(user_id :int):
@@ -34,6 +35,7 @@ async def get_candidates_files(user_id :int):
     all_files = await database.fetch_all(query)
     return all_files
 
+
 @router.get("/user", response_model=List[CandidateFile], dependencies=[Depends(JWTBearer())])
 async def get_users_candidates_files(user_id:int):
 
@@ -44,6 +46,7 @@ async def get_users_candidates_files(user_id:int):
     user_files = await database.fetch_all(query)
     return user_files
 
+
 @router.get("/single", response_model=CandidateFile, dependencies=[Depends(JWTBearer())])
 async def get_single_candidate_file(id:int):
 
@@ -53,6 +56,7 @@ async def get_single_candidate_file(id:int):
         raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail=FILE_NOT_FOUND_MESSAGE)
 
     return {**candidate_file}
+
 
 @router.get("/get_constraints/{c_file_id}", status_code=status.HTTP_200_OK, dependencies=[Depends(JWTBearer())])
 async def get_all_constraints(c_file_id : int):
@@ -76,27 +80,44 @@ async def get_all_constraints(c_file_id : int):
         'econstraints' : format_enum_constraints(econstraints, f_id)
     }
 
+
 @router.post("/add/{user_id}", status_code=status.HTTP_201_CREATED, dependencies=[Depends(JWTBearer())])
 async def store_candidates_files(user_id:int ,c_file:UploadFile = File(...)):
     if not await check_user(user_id):
         raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail="User not found. You should have an account to use our services.")
 
     c_file.filename = rename_file(c_file.filename)
-    with open(f'files/candidates/{c_file.filename}', "wb") as buffer:
-        shutil.copyfileobj(c_file.file, buffer)
+    extension = c_file.filename.split(".")[1]
+    zip_file_path = ""
+    data_file_path = ""
+    resumes_df = None
 
-    file_path = get_file_path(FileType.cFile, c_file.filename)
+    if(extension == "zip"):
+        with open(f'files/compressed/{c_file.filename}', "wb") as buffer:
+            shutil.copyfileobj(c_file.file, buffer)
+        zip_file_path = get_file_path(FileType.zFile, c_file.filename)
+        resumes_df, data_file_path = read_resume_from_zip_file(zip_file_path)
+    elif(extension in ['csv', 'xlsx', 'xls']):
+        with open(f'files/candidates/{c_file.filename}', "wb") as buffer:
+            shutil.copyfileobj(c_file.file, buffer)
+        data_file_path = get_file_path(FileType.cFile, c_file.filename)
+        resumes_df = read_file(data_file_path)
+    else:
+        return {"message": "File extension not supported", "data": None}
+    
     query = candidates_files.insert().values(
-    extension = c_file.filename.split(".")[1],
-    path = file_path,
+    zip_path = zip_file_path,
+    data_path = data_file_path,
+    extension = get_file_name_from_path(data_file_path).split(".")[1],
+    performed_cleaning = "",
     user_id = user_id
     )
     record_id = await database.execute(query)
     if(record_id):
-        c_file_features = extract_features(file_path)
-        return {"c_file_id" : record_id, "data": c_file_features}
+        return {"message" : "OK", "data": resumes_df}
 
-    return {"c_file_id" : -1, "data": None}
+    return {"message" : "An error has occured while saving data in database !", "data": None}
+
 
 @router.post("/add_features/{user_id}", status_code=status.HTTP_201_CREATED, dependencies=[Depends(JWTBearer())])
 async def store_candidates_file_feature(user_id:int , data:AllFeatureIn):
