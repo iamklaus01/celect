@@ -2,18 +2,18 @@ from pydantic import BaseModel
 
 
 class SelectionFileIn(BaseModel):
-    encodedFile : str
+    encoded_file : str
     status : str
-    n_sol : int
+    nb_sol : int
     satisfaction : int
     features : str
     candidatesFile_id : int
 
 class SelectionFile(BaseModel):
     id : int
-    encodedFile : str
+    encoded_file : str
     status : str
-    nbre_sol : int
+    nb_sol : int
     satisfaction : int
     features: str
     candidatesFile_id : int

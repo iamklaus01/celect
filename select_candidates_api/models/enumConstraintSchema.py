@@ -9,12 +9,6 @@ class EnumConstraintIn(BaseModel):
     number : int
     metric : Metric
     feature_id : int
-
-class OptEnumConstraintIn(BaseModel):
-    value : str
-    number : int
-    metric : Metric
-    feature_id : int
     weight : int
     optimize : OptimizeType
 
@@ -30,6 +24,3 @@ class EnumConstraint(BaseModel):
 
 class AllEnumConstraintIn(BaseModel):
     data : List[EnumConstraintIn]
-
-class AllOptEnumConstraintIn(BaseModel):
-    data : List[OptEnumConstraintIn]

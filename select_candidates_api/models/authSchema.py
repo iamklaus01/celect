@@ -2,13 +2,14 @@ from datetime import datetime
 from typing import Optional
 from pydantic import BaseModel
 
-from tables import Role
+from tables import Role, Pricing
 
 class UserIn(BaseModel):
     name : str
     email : str
     password : str
     role: Role
+    pricing: Pricing
 
 class User(BaseModel):
     id : int
@@ -16,6 +17,7 @@ class User(BaseModel):
     email : str
     password : str
     role: Role
+    pricing: Pricing
     active: bool
     verified : bool
     verification_code : str

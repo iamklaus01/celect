@@ -4,14 +4,14 @@ from tables import ValueType
 
 class FeatureIn(BaseModel):
     label : str
-    valueType : ValueType
+    value_type : ValueType
     candidatesFile_id : int
 
 
 class Feature(BaseModel):
     id : int
     label : str
-    valueType : ValueType
+    value_type : ValueType
     candidatesFile_id : int
 
 class FeatureSaveIn(BaseModel):
