@@ -4,10 +4,10 @@ from models.featureSchema import Feature
 from ortools.sat.python import cp_model
 
 
-from database import database
+from db.database import database
 from models.candidatesFileSchema import CandidateFile
 from solver.solution_format import SolutionFormat
-from tables import Metric, ValueType, integer_constraints, enum_constraints
+from db.tables import Metric, ValueType, integer_constraints, enum_constraints
 from utils.util import read_file
 
 async def get_constraint(feature_id : int, type : ValueType):

@@ -1,6 +1,6 @@
 from typing import List
 from pydantic import BaseModel
-from tables import ValueType
+from db.tables import ValueType
 
 class FeatureIn(BaseModel):
     label : str

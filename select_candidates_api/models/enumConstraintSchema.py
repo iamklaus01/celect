@@ -1,7 +1,7 @@
 from typing import List
 from pydantic import BaseModel
 
-from tables import Metric, OptimizeType
+from db.tables import Metric, OptimizeType
 
 
 class EnumConstraintIn(BaseModel):
